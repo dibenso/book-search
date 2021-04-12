@@ -7,7 +7,6 @@ const socketIO = require("socket.io");
 const routes = require("./routes");
 
 const PORT = process.env.PORT || 8080;
-const app = express();
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
   useNewUrlParser: true,
@@ -16,17 +15,22 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
   useFindAndModify: false
 });
 
+const app = express();
+
 if (process.env.NODE_ENV !== "production") app.use(cors());
+
 app.use(express.static("build", { extensions: ["html"] }));
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(routes);
 
 const server = http.createServer(app);
-const io = socketIO(server);
-
-io.on("connection", () => {
-  console.log("a user connected");
+const io = socketIO(server, {
+  cors: {
+    origin: "*"
+  }
 });
 
-app.listen(PORT, () => console.log(`🚀 Listening on PORT ${PORT}`));
+app.set("socketio", io);
+
+server.listen(PORT, () => console.log(`🚀 Listening on PORT ${PORT}`));
