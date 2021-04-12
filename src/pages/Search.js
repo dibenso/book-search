@@ -12,7 +12,7 @@ export default function Search({ match }) {
     try {
       setFetching(true);
 
-      const response = await fetch(`/api/search?q=${query}`);
+      const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
       const results = await response.json();
 
       setError(false);

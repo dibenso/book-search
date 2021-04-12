@@ -2,20 +2,6 @@ require("isomorphic-fetch");
 const router = require("express").Router();
 const { Book } = require("../models");
 
-router.get("/api/search", async (req, res) => {
-  try {
-    const { q } = req.query;
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${q}`);
-    const books = await response.json();
-
-    res.json(books);
-  } catch (error) {
-    res.sendStatus(500);
-
-    throw error;
-  }
-});
-
 router.get("/api/books", async (req, res) => {
   try {
     const books = await Book.find();
