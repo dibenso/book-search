@@ -43,7 +43,7 @@ export default function Saved({ match }) {
       )}
       {error && <p style={{ background: "rgba(255, 0, 0, 0.2)" }}>Unable to fetch saved books</p>}
       {books &&
-        books.map(({ title, authors, link, image, description, _id }, index) => (
+        books.reverse().map(({ title, authors, link, image, description, _id }, index) => (
           <div key={String(index)} style={{ border: "1px solid black", marginLeft: 20, marginRight: 20, padding: 10 }}>
             <Row>
               <Col md={6} style={{ textAlign: "left" }}>
