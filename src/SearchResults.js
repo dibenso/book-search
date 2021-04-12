@@ -8,7 +8,7 @@ const styles = {
 export default function SearchResults({ books }) {
   const saveBook = async ({ volumeInfo }) => {
     try {
-      await fetch("http://localhost:8080/api/books", {
+      await fetch("/api/books", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -42,7 +42,7 @@ export default function SearchResults({ books }) {
           </Row>
           <Row>
             <Col md={3}>
-              <img src={book.volumeInfo.imageLinks.thumbnail} alt="Book" />
+              {book.volumeInfo.imageLinks && <img src={book.volumeInfo.imageLinks.thumbnail} alt="Book" />}
             </Col>
             <Col md={9}>
               <p>{book.volumeInfo.description}</p>
